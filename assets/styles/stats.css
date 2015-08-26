@@ -1,0 +1,50 @@
+
+body {
+	font-size: 17px;
+}
+
+h1 {
+	margin: 8px;
+}
+
+#Stats {
+}
+
+#vmstat-header {
+}
+
+#vmstat-header #hostname {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+#vmstat-header #release {
+	font-size: 0.8em;
+	vertical-align: middle;
+}
+
+.stat {
+	float: left;
+	height: 100%;
+	margin: 8px;
+	padding: 6px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #888888;
+}
+
+.stat h2 {
+	margin: 2px;
+	text-align: right;
+}
+
+.stat table {
+	width: 100%;
+}
+
+.stat table tbody tr td {
+	text-align: right;
+}
+.stat table tr th {
+	text-align: right;
+}

@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# create the stats
+#
+
+app=localhost:50100
+
+cmd="curl http://$app/vmstat/create/"
+for col in r b ; do
+		cmd="$cmd&procs\[$col\]=0"
+done
+for col in swpd free buff cache ; do
+		cmd="$cmd&memory\[$col\]=0"
+done
+for col in si so ; do
+		cmd="$cmd&swap\[$col\]=0"
+done
+for col in bi bo ; do
+		cmd="$cmd&io\[$col\]=0"
+done
+for col in bo int ; do
+		cmd="$cmd&system\[$col\]=0"
+done
+for col in us sys id wa st ; do
+		cmd="$cmd&cpu\[$col\]=0"
+done
+cmd=`echo $cmd | sed -e "s/\/\&/\/\?/"`
+echo $cmd
+$cmd
+echo
+

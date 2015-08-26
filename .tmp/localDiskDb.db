@@ -1,0 +1,79 @@
+{
+  "data": {
+    "stats": [],
+    "vmstat": [
+      {
+        "procs": {
+          "r": "11554",
+          "b": "12379"
+        },
+        "memory": {
+          "swpd": "15313",
+          "free": "15504",
+          "buff": "11256",
+          "cache": "15762"
+        },
+        "swap": {
+          "si": "22602",
+          "so": "2339"
+        },
+        "io": {
+          "bi": "4105",
+          "bo": "28046"
+        },
+        "system": {
+          "bo": "15495",
+          "int": "19773"
+        },
+        "cpu": {
+          "us": "3063",
+          "sys": "9960",
+          "id": "25703",
+          "wa": "16937",
+          "st": "11432"
+        },
+        "createdAt": "2015-08-26T06:53:07.859Z",
+        "updatedAt": "2015-08-26T07:11:35.839Z",
+        "id": 16
+      }
+    ]
+  },
+  "schema": {
+    "stats": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "vmstat": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "stats": {
+      "id": 12
+    },
+    "vmstat": {
+      "id": 16
+    }
+  }
+}

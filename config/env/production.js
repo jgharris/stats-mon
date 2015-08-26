@@ -10,7 +10,13 @@
  *
  */
 
+
 module.exports = {
+
+	models: {
+			migrate: "safe"
+	},
+	port: 50100,
 
   /***************************************************************************
    * Set the default database connection for models in the production        *
@@ -36,3 +42,4 @@ module.exports = {
   // }
 
 };
+

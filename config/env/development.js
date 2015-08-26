@@ -16,7 +16,10 @@ module.exports = {
    * Set the default database connection for models in the development       *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
-
+  models: {
+	migrate: "safe"
+  },
+  port: 50100
   // models: {
   //   connection: 'someMongodbServer'
   // }

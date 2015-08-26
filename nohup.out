@@ -1,0 +1,171 @@
+
+> stats-mon@0.0.0 start /home/jgh/apps/stats-mon
+> node app.js
+
+-----------------------------------------------------------------
+
+ Excuse my interruption, but it looks like this app
+ does not have a project-wide "migrate" setting configured yet.
+ (perhaps this is the first time you're lifting it with models?)
+ 
+ In short, this setting controls whether/how Sails will attempt to automatically
+ rebuild the tables/collections/sets/etc. in your database schema.
+ You can read more about the "migrate" setting here:
+ http://sailsjs.org/#/documentation/concepts/ORM/model-settings.html?q=migrate
+
+ In a production environment (NODE_ENV==="production") Sails always uses
+ migrate:"safe" to protect inadvertent deletion of your data.
+ However during development, you have a few other options for convenience:
+
+ 1. safe  - never auto-migrate my database(s). I will do it myself (by hand) 
+ 2. alter - auto-migrate, but attempt to keep my existing data (experimental)
+ 3. drop  - wipe/drop ALL my data and rebuild models every time I lift Sails
+
+What would you like Sails to do?
+
+[32minfo: [39mTo skip this prompt in the future, set `sails.config.models.migrate`.
+[32minfo: [39m(conventionally, this is done in `config/models.js`)
+
+[33mwarn: [39m** DO NOT CHOOSE "2" or "3" IF YOU ARE WORKING WITH PRODUCTION DATA **
+
+prompt: [90m?[39m[90m: [39m 
+events.js:72
+        throw er; // Unhandled 'error' event
+              ^
+Error: EBADF, read
+
+npm ERR! stats-mon@0.0.0 start: `node app.js`
+npm ERR! Exit status 8
+npm ERR! 
+npm ERR! Failed at the stats-mon@0.0.0 start script.
+npm ERR! This is most likely a problem with the stats-mon package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     node app.js
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls stats-mon
+npm ERR! There is likely additional logging output above.
+npm ERR! System Linux 3.17.4-301.fc21.x86_64
+npm ERR! command "node" "/usr/bin/npm" "start"
+npm ERR! cwd /home/jgh/apps/stats-mon
+npm ERR! node -v v0.10.36
+npm ERR! npm -v 1.4.1
+npm ERR! code ELIFECYCLE
+npm ERR! 
+npm ERR! Additional logging details can be found in:
+npm ERR!     /home/jgh/apps/stats-mon/npm-debug.log
+npm ERR! not ok code 0
+
+> stats-mon@0.0.0 start /home/jgh/apps/stats-mon
+> node app.js
+
+-----------------------------------------------------------------
+
+ Excuse my interruption, but it looks like this app
+ does not have a project-wide "migrate" setting configured yet.
+ (perhaps this is the first time you're lifting it with models?)
+ 
+ In short, this setting controls whether/how Sails will attempt to automatically
+ rebuild the tables/collections/sets/etc. in your database schema.
+ You can read more about the "migrate" setting here:
+ http://sailsjs.org/#/documentation/concepts/ORM/model-settings.html?q=migrate
+
+ In a production environment (NODE_ENV==="production") Sails always uses
+ migrate:"safe" to protect inadvertent deletion of your data.
+ However during development, you have a few other options for convenience:
+
+ 1. safe  - never auto-migrate my database(s). I will do it myself (by hand) 
+ 2. alter - auto-migrate, but attempt to keep my existing data (experimental)
+ 3. drop  - wipe/drop ALL my data and rebuild models every time I lift Sails
+
+What would you like Sails to do?
+
+[32minfo: [39mTo skip this prompt in the future, set `sails.config.models.migrate`.
+[32minfo: [39m(conventionally, this is done in `config/models.js`)
+
+[33mwarn: [39m** DO NOT CHOOSE "2" or "3" IF YOU ARE WORKING WITH PRODUCTION DATA **
+
+prompt: [90m?[39m[90m: [39m 
+ Temporarily using `sails.config.models.migrate="safe"...
+ (press CTRL+C to cancel-- continuing lift automatically in 0.5 seconds...)
+
+[32minfo: [39m
+[32minfo: [39m               .-..-.
+[32minfo: [39m
+[32minfo: [39m   Sails              <|    .-..-.
+[32minfo: [39m   v0.11.0             |\
+[32minfo: [39m                      /|.\
+[32minfo: [39m                     / || \
+[32minfo: [39m                   ,'  |'  \
+[32minfo: [39m                .-'.-==|/_--'
+[32minfo: [39m                `--'-------' 
+[32minfo: [39m   __---___--___---___--___---___--___
+[32minfo: [39m ____---___--___---___--___---___--___-__
+[32minfo: [39m
+[32minfo: [39mServer lifted in `/home/jgh/apps/stats-mon`
+[32minfo: [39mTo see your app, visit [4mhttp://localhost:50100[24m
+[32minfo: [39mTo shut down Sails, press <CTRL> + C at any time.
+[37m[39m
+[34mdebug: [39m[90m--------------------------------------------------------[39m
+[34mdebug: [39m[90m:: Tue Aug 25 2015 10:37:37 GMT+0800 (AWST)[39m
+[37m[39m
+[34mdebug: [39mEnvironment : prod
+[34mdebug: [39mPort        : 50100
+[34mdebug: [39m[90m--------------------------------------------------------[39m
+
+> stats-mon@0.0.0 start /home/jgh/apps/stats-mon
+> node app.js
+
+-----------------------------------------------------------------
+
+ Excuse my interruption, but it looks like this app
+ does not have a project-wide "migrate" setting configured yet.
+ (perhaps this is the first time you're lifting it with models?)
+ 
+ In short, this setting controls whether/how Sails will attempt to automatically
+ rebuild the tables/collections/sets/etc. in your database schema.
+ You can read more about the "migrate" setting here:
+ http://sailsjs.org/#/documentation/concepts/ORM/model-settings.html?q=migrate
+
+ In a production environment (NODE_ENV==="production") Sails always uses
+ migrate:"safe" to protect inadvertent deletion of your data.
+ However during development, you have a few other options for convenience:
+
+ 1. safe  - never auto-migrate my database(s). I will do it myself (by hand) 
+ 2. alter - auto-migrate, but attempt to keep my existing data (experimental)
+ 3. drop  - wipe/drop ALL my data and rebuild models every time I lift Sails
+
+What would you like Sails to do?
+
+[32minfo: [39mTo skip this prompt in the future, set `sails.config.models.migrate`.
+[32minfo: [39m(conventionally, this is done in `config/models.js`)
+
+[33mwarn: [39m** DO NOT CHOOSE "2" or "3" IF YOU ARE WORKING WITH PRODUCTION DATA **
+
+prompt: [90m?[39m[90m: [39m 
+ Temporarily using `sails.config.models.migrate="safe"...
+ (press CTRL+C to cancel-- continuing lift automatically in 0.5 seconds...)
+
+[32minfo: [39m
+[32minfo: [39m               .-..-.
+[32minfo: [39m
+[32minfo: [39m   Sails              <|    .-..-.
+[32minfo: [39m   v0.11.0             |\
+[32minfo: [39m                      /|.\
+[32minfo: [39m                     / || \
+[32minfo: [39m                   ,'  |'  \
+[32minfo: [39m                .-'.-==|/_--'
+[32minfo: [39m                `--'-------' 
+[32minfo: [39m   __---___--___---___--___---___--___
+[32minfo: [39m ____---___--___---___--___---___--___-__
+[32minfo: [39m
+[32minfo: [39mServer lifted in `/home/jgh/apps/stats-mon`
+[32minfo: [39mTo see your app, visit [4mhttp://localhost:50100[24m
+[32minfo: [39mTo shut down Sails, press <CTRL> + C at any time.
+[37m[39m
+[34mdebug: [39m[90m--------------------------------------------------------[39m
+[34mdebug: [39m[90m:: Tue Aug 25 2015 10:54:26 GMT+0800 (AWST)[39m
+[37m[39m
+[34mdebug: [39mEnvironment : prod
+[34mdebug: [39mPort        : 50100
+[34mdebug: [39m[90m--------------------------------------------------------[39m
