@@ -7,22 +7,22 @@ app=localhost:50100
 
 cmd="curl http://$app/vmstat/update/16/"
 for col in r b ; do
-		cmd="$cmd&procs\[$col\]=$RANDOM"
+		cmd="$cmd&procs\[$col\]=`printf "%05d" $RANDOM`"
 done
 for col in swpd free buff cache ; do
-		cmd="$cmd&memory\[$col\]=$RANDOM"
+		cmd="$cmd&memory\[$col\]=`printf "%05d" $RANDOM`"
 done
 for col in si so ; do
-		cmd="$cmd&swap\[$col\]=$RANDOM"
+		cmd="$cmd&swap\[$col\]=`printf "%05d" $RANDOM`"
 done
 for col in bi bo ; do
-		cmd="$cmd&io\[$col\]=$RANDOM"
+		cmd="$cmd&io\[$col\]=`printf "%05d" $RANDOM`"
 done
-for col in bo int ; do
-		cmd="$cmd&system\[$col\]=$RANDOM"
+for col in int cs ; do
+		cmd="$cmd&system\[$col\]=`printf "%05d" $RANDOM`"
 done
-for col in us sys id wa st ; do
-		cmd="$cmd&cpu\[$col\]=$RANDOM"
+for col in us sy id wa st ; do
+		cmd="$cmd&cpu\[$col\]=`printf "%05d" $RANDOM`"
 done
 cmd=`echo $cmd | sed -e "s/\/\&/\/\?/"`
 echo $cmd

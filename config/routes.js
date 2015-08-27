@@ -33,7 +33,10 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'homepage' },
-  '/vmstat/mon': 'VmstatConstroller.mon'
+  '/collector/start' : 'CollectorController.start',
+  '/collector/stop' : 'CollectorController.stop',
+  '/vmstat/mon': 'VmstatConstroller.mon',
+  '/os/mon': 'OsConstroller.mon'
 //  'get /mon' : 'StatsController.monitor'
 
 

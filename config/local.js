@@ -27,6 +27,8 @@
  * http://sailsjs.org/#!/documentation/anatomy/myApp/config/local.js.html
  */
 
+//local.os=os.require('os');
+
 module.exports = {
 
   /***************************************************************************

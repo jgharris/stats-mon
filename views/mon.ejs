@@ -1,5 +1,10 @@
 <% include header %>
-<h1>vmstat</h1>
+
+<script>
+var title = '<%= title %>';
+</script>
+
+<h1><%= title %></h1>
 
 <div id="Stats">
 <% for (var section in stat) {  %>

@@ -1,45 +1,134 @@
 {
   "data": {
-    "stats": [],
+    "stats": [
+      {
+        "name": "devfed01-vmstat",
+        "stats": {
+          "procs": {
+            "r": "0",
+            "b": "0"
+          },
+          "memory": {
+            "swpd": "168",
+            "free": "657168",
+            "buff": "303924",
+            "cache": "635384"
+          },
+          "swap": {
+            "si": "0",
+            "so": "0"
+          },
+          "io": {
+            "bi": "0",
+            "bo": "4"
+          },
+          "system": {
+            "int": "2017",
+            "cs": "225"
+          },
+          "cpu": {
+            "us": "1",
+            "sy": "0",
+            "id": "100",
+            "wa": "0",
+            "st": "0\n"
+          }
+        },
+        "createdAt": "2015-08-27T17:56:16.292Z",
+        "updatedAt": "2015-08-27T18:05:15.039Z"
+      }
+    ],
     "vmstat": [
       {
         "procs": {
-          "r": "11554",
-          "b": "12379"
+          "r": "0",
+          "b": "0"
         },
         "memory": {
-          "swpd": "15313",
-          "free": "15504",
-          "buff": "11256",
-          "cache": "15762"
+          "swpd": "168",
+          "free": "675984",
+          "buff": "300488",
+          "cache": "634664"
         },
         "swap": {
-          "si": "22602",
-          "so": "2339"
+          "si": "0",
+          "so": "0"
         },
         "io": {
-          "bi": "4105",
-          "bo": "28046"
+          "bi": "0",
+          "bo": "4"
         },
         "system": {
-          "bo": "15495",
-          "int": "19773"
+          "int": "1957",
+          "cs": "1101"
         },
         "cpu": {
-          "us": "3063",
-          "sys": "9960",
-          "id": "25703",
-          "wa": "16937",
-          "st": "11432"
+          "us": "1",
+          "sy": "1",
+          "id": "99",
+          "wa": "0",
+          "st": "0\n"
         },
         "createdAt": "2015-08-26T06:53:07.859Z",
-        "updatedAt": "2015-08-26T07:11:35.839Z",
+        "updatedAt": "2015-08-27T16:40:31.832Z",
         "id": 16
       }
-    ]
+    ],
+    "os": [
+      {
+        "host": {
+          "hostname": "devfed01"
+        },
+        "createdAt": "2015-08-26T08:39:52.651Z",
+        "updatedAt": "2015-08-26T17:00:23.130Z",
+        "id": 3,
+        "memory": {
+          "total": "225779",
+          "free": "17896"
+        }
+      }
+    ],
+    "collector": [
+      {
+        "name": "devfed01-vmstat",
+        "exec": "vmstat",
+        "params": "1",
+        "action": "spawn",
+        "handler": "singleStatRow",
+        "source": "devfed01",
+        "createdAt": "2015-08-27T17:55:45.803Z",
+        "updatedAt": "2015-08-27T17:56:16.278Z",
+        "running": true,
+        "started": {}
+      },
+      {
+        "name": "devfed01-vmstat-d",
+        "exec": "vmstat",
+        "params": "-d 1",
+        "action": "spawn",
+        "handler": "multipleStatRows",
+        "source": "devfed01",
+        "createdAt": "2015-08-27T17:55:45.917Z",
+        "updatedAt": "2015-08-27T17:55:45.917Z"
+      }
+    ],
+    "colobj": []
   },
   "schema": {
     "stats": {
+      "name": {
+        "type": "string",
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "vmstat": {
       "id": {
         "type": "integer",
         "autoIncrement": true,
@@ -53,7 +142,34 @@
         "type": "datetime"
       }
     },
-    "vmstat": {
+    "os": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "collector": {
+      "name": {
+        "type": "string",
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "colobj": {
       "id": {
         "type": "integer",
         "autoIncrement": true,
@@ -74,6 +190,13 @@
     },
     "vmstat": {
       "id": 16
-    }
+    },
+    "os": {
+      "id": 3
+    },
+    "collector": {
+      "id": 4
+    },
+    "colobj": {}
   }
 }

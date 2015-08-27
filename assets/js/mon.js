@@ -1,6 +1,9 @@
+// set global title in template
 io.socket.on('connect', function () {
-	io.socket.get('/vmstat', {}, function () {});
-	io.socket.on('vmstat', updateMon);
+	io.socket.get('/'+title, {}, function () {
+		io.socket.get('/'+title+'/start');
+	});
+	io.socket.on(title, updateMon);
 });
 
 function showMon(stats) {

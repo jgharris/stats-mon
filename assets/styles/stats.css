@@ -1,6 +1,6 @@
 
 body {
-	font-size: 17px;
+	font-family:  "Courier New", Courier, monospace;
 }
 
 h1 {
@@ -10,24 +10,24 @@ h1 {
 #Stats {
 }
 
-#vmstat-header {
+#header {
 }
 
-#vmstat-header #hostname {
+#header #hostname {
 	font-size: 1.2em;
 	font-weight: bold;
 }
 
-#vmstat-header #release {
+#header #release {
 	font-size: 0.8em;
 	vertical-align: middle;
 }
 
 .stat {
 	float: left;
-	height: 100%;
+	min-width: 100px;
 	margin: 8px;
-	padding: 6px;
+	padding: 12px;
 	border-style: solid;
 	border-width: 1px;
 	border-color: #888888;

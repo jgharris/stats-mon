@@ -5,7 +5,7 @@
 
 app=localhost:50100
 
-cmd="curl http://$app/vmstat/create/"
+cmd="curl http://$app/stats/create/vmstat/"
 for col in r b ; do
 		cmd="$cmd&procs\[$col\]=0"
 done
