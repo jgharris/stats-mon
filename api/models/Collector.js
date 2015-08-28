@@ -34,15 +34,15 @@ module.exports = {
 				var collector = getCollector(col);
 				collector.stop(cb);
 			});
-		}
+		},
+
 };
 
 function getCollector (col) {
-	var collector = Collector[col.name];
-	if (!collector) {
+	if (!Collector.list) Collector.list = [];
+	if (!Collector.list[col.name]) {
 		var ColObj = require('../class/ColObj');
-		collector = new ColObj(col);
-		Collector[col.name] = collector;
+		Collector.list[col.name] = new ColObj(col);
 	}
-	return collector;
+	return Collector.list[col.name];
 }

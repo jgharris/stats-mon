@@ -11,11 +11,13 @@ module.exports = ColObj;
 function ColObj(col) {
 	this.orig_collector = col;
 	this.collector = col;
-	this.collector.running = false;
+	this.objUpdate({ running: false, stopped: ''});
 }
 
+ColObj.prototype.running = false;
+
 ColObj.prototype.start = function (cb) {
-	if (!this.collector.running) {
+	if (!this.running) {
 
 		// fire it up
 		if (this.collector.action == "spawn") {
@@ -26,13 +28,15 @@ ColObj.prototype.start = function (cb) {
 		}
 		
 		// update status
-		this.objUpdate({ running: true, started: new Date().toJSON});
+		this.objUpdate({ running: true, started: new Date().toISOString()});
+		this.running = true;
 
 		// standard event handlings 
 		var obj = this;
 		this.proc.on('close', function (code) {
-			obj.objUpdate({ running: false, stopped: new Date().toJSON});
-			console.log('vmstat: child process exited with code ' + code);
+			this.running = false;
+			obj.objUpdate({ running: false, stopped: new Date().toISOString()});
+			if (code) console.log('vmstat: child process exited with code ' + code);
 		});
 		
 		// get the right handler for this command
@@ -100,16 +104,15 @@ ColObj.prototype.objUpdate = function (data) {
 	for (key in data) {
 		this.collector[key] = data[key];
 	}
-	var col=this.collector;
+	var colname=this.collector.name;
 	this.collector.save(function (error) {
-		if (!error) Collector.publishUpdate(col.name, data );
+		if (!error) Collector.publishUpdate(colname, data);
 	});
 }
 
 ColObj.prototype.stop = function (cb) {
-	if (this.collector.running) {
+	if (this.running) {
 		this.proc.kill();
-		this.collector.running = false;
 		cb(true, "no going");
 	} else {
 		cb(true, "not going");

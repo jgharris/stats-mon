@@ -5,14 +5,14 @@
         "name": "devfed01-vmstat",
         "stats": {
           "procs": {
-            "r": "0",
+            "r": "1",
             "b": "0"
           },
           "memory": {
-            "swpd": "168",
-            "free": "657168",
-            "buff": "303924",
-            "cache": "635384"
+            "swpd": "436",
+            "free": "582156",
+            "buff": "289428",
+            "cache": "740940"
           },
           "swap": {
             "si": "0",
@@ -23,19 +23,55 @@
             "bo": "4"
           },
           "system": {
-            "int": "2017",
-            "cs": "225"
+            "int": "2053",
+            "cs": "1743"
           },
           "cpu": {
-            "us": "1",
-            "sy": "0",
-            "id": "100",
+            "us": "49",
+            "sy": "1",
+            "id": "50",
             "wa": "0",
             "st": "0\n"
           }
         },
         "createdAt": "2015-08-27T17:56:16.292Z",
-        "updatedAt": "2015-08-27T18:05:15.039Z"
+        "updatedAt": "2015-08-28T01:19:04.056Z"
+      },
+      {
+        "name": "vmstat",
+        "stats": {
+          "procs": {
+            "r": "1",
+            "b": "0"
+          },
+          "memory": {
+            "swpd": "436",
+            "free": "569628",
+            "buff": "304712",
+            "cache": "741720"
+          },
+          "swap": {
+            "si": "0",
+            "so": "0"
+          },
+          "io": {
+            "bi": "0",
+            "bo": "8"
+          },
+          "system": {
+            "int": "2067",
+            "cs": "1921"
+          },
+          "cpu": {
+            "us": "47",
+            "sy": "4",
+            "id": "49",
+            "wa": "0",
+            "st": "0\n"
+          }
+        },
+        "createdAt": "2015-08-28T04:02:00.615Z",
+        "updatedAt": "2015-08-28T13:13:54.226Z"
       }
     ],
     "vmstat": [
@@ -90,29 +126,37 @@
     ],
     "collector": [
       {
-        "name": "devfed01-vmstat",
+        "name": "vmstat",
         "exec": "vmstat",
         "params": "1",
         "action": "spawn",
         "handler": "singleStatRow",
-        "source": "devfed01",
-        "createdAt": "2015-08-27T17:55:45.803Z",
-        "updatedAt": "2015-08-27T17:56:16.278Z",
-        "running": true,
-        "started": {}
+        "createdAt": "2015-08-28T09:19:53.382Z",
+        "updatedAt": "2015-08-28T13:13:54.605Z",
+        "running": false,
+        "started": "2015-08-28T13:13:51.206Z",
+        "stopped": "2015-08-28T13:13:54.604Z"
       },
       {
-        "name": "devfed01-vmstat-d",
+        "name": "vmstat-d",
         "exec": "vmstat",
         "params": "-d 1",
         "action": "spawn",
         "handler": "multipleStatRows",
-        "source": "devfed01",
-        "createdAt": "2015-08-27T17:55:45.917Z",
-        "updatedAt": "2015-08-27T17:55:45.917Z"
+        "createdAt": "2015-08-28T09:19:53.446Z",
+        "updatedAt": "2015-08-28T09:19:53.446Z"
       }
     ],
-    "colobj": []
+    "colobj": [],
+    "publisher": [
+      {
+        "name": "devfed01-vmstat",
+        "collector": "vmstat",
+        "source": "devfed01",
+        "createdAt": "2015-08-28T09:19:53.494Z",
+        "updatedAt": "2015-08-28T09:19:53.494Z"
+      }
+    ]
   },
   "schema": {
     "stats": {
@@ -182,6 +226,19 @@
       "updatedAt": {
         "type": "datetime"
       }
+    },
+    "publisher": {
+      "name": {
+        "type": "string",
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
     }
   },
   "counters": {
@@ -197,6 +254,9 @@
     "collector": {
       "id": 4
     },
-    "colobj": {}
+    "colobj": {},
+    "publisher": {
+      "id": 1
+    }
   }
 }
