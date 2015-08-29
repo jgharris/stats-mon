@@ -8,13 +8,16 @@
 
 module.exports = ColObj; 
 
-function ColObj(col) {
+function ColObj(col, name) {
 	this.orig_collector = col;
 	this.collector = col;
+	this.publisher = name;
 	this.objUpdate({ running: false, stopped: ''});
 }
 
 ColObj.prototype.running = false;
+ColObj.prototype.collector = false;
+ColObj.prototype.publisher = false;
 
 ColObj.prototype.start = function (cb) {
 	if (!this.running) {
@@ -34,13 +37,13 @@ ColObj.prototype.start = function (cb) {
 		// standard event handlings 
 		var obj = this;
 		this.proc.on('close', function (code) {
-			this.running = false;
+			obj.running = false;
 			obj.objUpdate({ running: false, stopped: new Date().toISOString()});
 			if (code) console.log('vmstat: child process exited with code ' + code);
 		});
 		
 		// get the right handler for this command
-		var han=this.getHandler();
+		var han=this.getHandler(this.collector);
 		if (!han) {
 			cb(false, this.collector.name + ": no handler");
 			return;
@@ -50,7 +53,7 @@ ColObj.prototype.start = function (cb) {
 		obj = this;
 		this.proc.stdout.on('data', function(data) {
 			var newData = han.processHunk(data);
-			obj.updateStats(obj.collector.name, newData);
+			obj.updateStats(obj.publisher, newData);
 		});
 		
 		// all set
@@ -60,43 +63,22 @@ ColObj.prototype.start = function (cb) {
 	}
 }
 
-// put newData into the stats
-// make a new record if needed
+// publish data as an update of the Publisher
 ColObj.prototype.updateStats = function (name, newData) {
-	Stats.findOne(name).exec(function (err, stat) {
-		if (!err) {
-			if (!stat) {
-				Stats.create({name: name, stats: {}}).exec(function (err, created) {
-					update(created, newData);
-				});
-			} else {
-				update(stat, newData);
-			}
-		}
-	});
-
-	// save stats and publish changes
-	var update = function(stat, newData) {
-		for (key in newData.stats) {
-			stat.stats[key] = newData.stats[key];
-		}
-		stat.save(function (error) {
-			if (!error) {
-				Stats.publishUpdate(name, newData);
-			} else {
-				console.log("error: "+error);
-			}
-		});
-	}
+	Publisher.publishUpdate(name, newData);
+//	Publisher.findOne(name).exec(function (err, pub) {
+//		if (!err) {
+//			Publisher.publishUpdate(pub.name, newData);
+//		}
+//	});
 }
 
 // get a handler object to process this output
-ColObj.prototype.getHandler = function () {
-	var han=require("../handlers/"+this.collector.handler);
-	this.handler = new han();
+ColObj.prototype.getHandler = function (stats) {
+	var han=require("../handlers/"+this.collector.handler.name);
+	this.handler = new han(this.collector);
 	return this.handler;
 }
-
 
 // update and save object
 // publish changes
@@ -113,6 +95,7 @@ ColObj.prototype.objUpdate = function (data) {
 ColObj.prototype.stop = function (cb) {
 	if (this.running) {
 		this.proc.kill();
+		this.running = false;
 		cb(true, "no going");
 	} else {
 		cb(true, "not going");
@@ -122,7 +105,6 @@ ColObj.prototype.stop = function (cb) {
 ColObj.prototype.spawn = function () {
 	var spawn = require('child_process').spawn;
 	this.proc = spawn(this.collector.exec, this.collector.params.split(/ /));
-	
 	return this.proc;
 }
 

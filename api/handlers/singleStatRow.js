@@ -1,32 +1,53 @@
 module.exports = singleStatRow; 
 
-function singleStatRow() {
-	this.columns = {
-			procs: { r : 0 , b : 0 },
-			memory: { swpd: 0, free: 0, buff: 0, cache: 0 },
-			swap: { si : 0 , so : 0 },
-			io: { bi : 0 , bo : 0 },
-			system: { int : 0 , cs : 0 },
-			cpu: { us : 0, sy : 0, id : 0, wa : 0, st : 0 }
-	};
-
+function singleStatRow(collector) {
+	this.keycol = collector.handler.keycol;
+	this.startcol = collector.handler.startcol;
+	this.columns = collector.stats;
 }
+
+singleStatRow.prototype.columns = {};
+singleStatRow.prototype.keycol = {};
+singleStatRow.prototype.startcol = {};
 
 singleStatRow.prototype.processHunk = function (data) {
-	var newData = this.parseHunk(this.columns, data);
+	var newData = this.parseHunk(data);
 	return newData;
 }
 
-singleStatRow.prototype.parseHunk = function (columns, data) {
-	var vals = data.toString().split(/  */);
-	var count = 1;
-	var newData = { stats: {} };
-	for (key in columns) {
-		newData.stats[key] = {};
-		for (subkey in columns[key]) {
-			newData.stats[key][subkey] = vals[count];
-			count++;
-		}
-	}
+singleStatRow.prototype.parseHunk = function (data) {
+	var lines = data.toString().split(/\n/);
+	var newData = [];
+	var vals = [];
+	var start = this.startcol;
+	var keycol = this.keycol;
+	var cols = this.columns;
+	lines.forEach(function (line) {
+		if (line == "") return;
+		vals = line.split(/  */);
+		count = start;
+		var ret = getObject(cols, keycol);
+		newData.push(ret);
+	});
+
 	return newData;
+	
+	function getObject(column, keyid) {
+		var ret = {};
+		for (key in column) {
+			if (typeof(column[key]) == "object") {
+				var k = key;
+				if (count==keyid) {
+					k = vals[count];
+					count++;
+				}
+				ret[k] = getObject(column[key], 0);
+			} else {
+				ret[key] = vals[count];
+				count++;
+			}
+		}
+		return ret;
+	}
+	
 }

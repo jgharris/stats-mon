@@ -41,14 +41,14 @@
         "name": "vmstat",
         "stats": {
           "procs": {
-            "r": "1",
+            "r": "0",
             "b": "0"
           },
           "memory": {
             "swpd": "436",
-            "free": "569628",
-            "buff": "304712",
-            "cache": "741720"
+            "free": "570496",
+            "buff": "305700",
+            "cache": "741888"
           },
           "swap": {
             "si": "0",
@@ -59,19 +59,19 @@
             "bo": "8"
           },
           "system": {
-            "int": "2067",
-            "cs": "1921"
+            "int": "1995",
+            "cs": "123"
           },
           "cpu": {
-            "us": "47",
-            "sy": "4",
-            "id": "49",
+            "us": "1",
+            "sy": "0",
+            "id": "99",
             "wa": "0",
             "st": "0\n"
           }
         },
         "createdAt": "2015-08-28T04:02:00.615Z",
-        "updatedAt": "2015-08-28T13:13:54.226Z"
+        "updatedAt": "2015-08-28T14:38:53.617Z"
       }
     ],
     "vmstat": [
@@ -126,25 +126,88 @@
     ],
     "collector": [
       {
+        "name": "vmstat-d",
+        "exec": "vmstat",
+        "params": "-dn 1",
+        "action": "spawn",
+        "handler": {
+          "name": "singleStatRow",
+          "startcol": 0,
+          "keycol": 0
+        },
+        "running": true,
+        "started": "2015-08-29T16:01:06.631Z",
+        "stopped": "",
+        "linekey": 1,
+        "stats": {
+          "disk": {
+            "reads": {
+              "total": 0,
+              "merged": 0,
+              "sectors": 0,
+              "ms": 0
+            },
+            "writes": {
+              "total": 0,
+              "merged": 0,
+              "sectors": 0,
+              "ms": 0
+            },
+            "io": {
+              "cur": 0,
+              "sec": 0
+            }
+          }
+        },
+        "createdAt": "2015-08-29T12:38:54.159Z",
+        "updatedAt": "2015-08-29T16:01:06.639Z"
+      },
+      {
         "name": "vmstat",
         "exec": "vmstat",
         "params": "1",
         "action": "spawn",
-        "handler": "singleStatRow",
-        "createdAt": "2015-08-28T09:19:53.382Z",
-        "updatedAt": "2015-08-28T13:13:54.605Z",
-        "running": false,
-        "started": "2015-08-28T13:13:51.206Z",
-        "stopped": "2015-08-28T13:13:54.604Z"
-      },
-      {
-        "name": "vmstat-d",
-        "exec": "vmstat",
-        "params": "-d 1",
-        "action": "spawn",
-        "handler": "multipleStatRows",
-        "createdAt": "2015-08-28T09:19:53.446Z",
-        "updatedAt": "2015-08-28T09:19:53.446Z"
+        "handler": {
+          "name": "singleStatRow",
+          "startcol": 1,
+          "keycol": -1
+        },
+        "running": true,
+        "started": "2015-08-29T15:07:56.626Z",
+        "stopped": "",
+        "stats": {
+          "procs": {
+            "r": 0,
+            "b": 0
+          },
+          "memory": {
+            "swpd": 0,
+            "free": 0,
+            "buff": 0,
+            "cache": 0
+          },
+          "swap": {
+            "si": 0,
+            "so": 0
+          },
+          "io": {
+            "bi": 0,
+            "bo": 0
+          },
+          "system": {
+            "int": 0,
+            "cs": 0
+          },
+          "cpu": {
+            "us": 0,
+            "sy": 0,
+            "id": 0,
+            "wa": 0,
+            "st": 0
+          }
+        },
+        "createdAt": "2015-08-29T12:41:13.322Z",
+        "updatedAt": "2015-08-29T15:07:56.648Z"
       }
     ],
     "colobj": [],
@@ -153,8 +216,15 @@
         "name": "devfed01-vmstat",
         "collector": "vmstat",
         "source": "devfed01",
-        "createdAt": "2015-08-28T09:19:53.494Z",
-        "updatedAt": "2015-08-28T09:19:53.494Z"
+        "createdAt": "2015-08-29T11:09:06.572Z",
+        "updatedAt": "2015-08-29T11:09:06.572Z"
+      },
+      {
+        "name": "devfed01-vmstat-d",
+        "collector": "vmstat-d",
+        "source": "devfed01-d",
+        "createdAt": "2015-08-29T11:09:06.641Z",
+        "updatedAt": "2015-08-29T11:09:06.641Z"
       }
     ]
   },

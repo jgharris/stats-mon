@@ -6,25 +6,24 @@
  */
 
 module.exports = {
-		start: function (req, res) {
-			var col = req.param('id');
-			Collector.start(col, function (succeed, message) {
-				if (succeed) {
-					return res.ok(message);
-				} else {
-					return res.serverError("cannot start " + col + ": " + message);
-				}
-			});
-		},
-		stop: function (req, res) {
-			Collector.stop(req.param('id'), function (succeed, message) {
-				if (succeed) {
-					return res.ok(message);
-				} else {
-					return res.serverError("cannot stop  " + col + ": " + message);
-				}
-			});
-		}
-
+//		start: function (req, res) {
+//			var col = req.param('id');
+//			Collector.start(col, function (succeed, message) {
+//				if (succeed) {
+//					return res.ok(message);
+//				} else {
+//					return res.serverError("cannot start " + col + ": " + message);
+//				}
+//			});
+//		},
+//		stop: function (req, res) {
+//			Collector.stop(req.param('id'), function (succeed, message) {
+//				if (succeed) {
+//					return res.ok(message);
+//				} else {
+//					return res.serverError("cannot stop  " + col + ": " + message);
+//				}
+//			});
+//		}
 };
 

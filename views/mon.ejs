@@ -4,23 +4,4 @@
 var title = '<%= title %>';
 </script>
 
-<h1><%= title %></h1>
-
-<div id="Stats">
-<% for (var section in stat) {  %>
-   <% if (section == "createdAt" || section == "updatedAt") { continue; } %>
-   <%  if (typeof(stat[section]) == "object") { %> 
-        <span id='<%= section %>' class="stat">
-         <h2><%= section %></h2>
-         <table id='<%= section %>-table'>
-          <%   for (var key in stat[section]) { %>
-                <tr>
-                 <th><%= key %></th>
-                 <td id='<%= section %>_<%= key %>'><%= stat[section][key] %></td>
-                </tr>
-          <%   } %>
-         </table>
-        </span>
-   <% } %>
-<% } %>
-</div>
+<div id="<%= title %>" name="subscriber"></div>

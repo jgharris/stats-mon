@@ -18,9 +18,9 @@ module.exports = {
 	start : function(name, cb) {
 		Publisher.findOne(name).exec(function(err, col) {
 			if (!col) {
-				cb(true, "cannot find collector [" + name + "]");
+				cb(true, "cannot find publisher [" + name + "]");
 			} else {
-				Collector.start(col.collector, cb);
+				Collector.start(col.collector, name, cb);
 			}
 		});
 	},
@@ -28,10 +28,11 @@ module.exports = {
 	stop : function(name, cb) {
 		Publisher.findOne(name).exec(function(err, col) {
 			if (!col) {
-				cb(true, "cannot find collector [" + name + "]");
+				cb(true, "cannot find publisher [" + name + "]");
 			} else {
 				Collector.stop(col.collector, cb);
 			}
 		});
-	}
+	},
+
 };

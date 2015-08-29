@@ -1,53 +1,88 @@
 // set global title in template
-io.socket.on('connect', function () {
-	io.socket.get('/'+title, {}, function () {
-		io.socket.get('/'+title+'/start');
-	});
-	io.socket.on(title, updateMon);
-});
+//io.socket.on('connect', function () {
+//	io.socket.get('/publisher/'+title, {}, function () {
+//		io.socket.on("publisher", updateMon);
+//	});
+//});
 
-function showMon(stats) {
-	$('#Stats').empty().append(oneStatRow(stats[0]));
+var sub = new Subscriber(title);
+
+function Subscriber(name) {
+	var obj = this;
+	io.socket.on('connect', function() {
+		io.socket.get('/publisher/' + name, {}, function() {
+			io.socket.on("publisher", obj.update);
+		});
+	});
 }
 
-function oneStatRow(stat) {
-	var ret = $('<div id=vmstat>');
-	var secs = [];
-	for (var section in stat) {
-		secs.push(section);
+Subscriber.prototype.update = function(message) {
+	message.data.forEach(
+		function(data) {
+			console.log(data);
+			if (data) getOne(data);
+		}
+	);
+
+	function getOne (data, parent) {
+		console.log("getOne:", parent);
+		for (var section in data) {
+			if (section.match(/__/)) continue;
+			var table;
+			var search = section;
+			if (parent) search=parent+"-"+section;
+			if ($.type(data[section]) == "object") {
+				table = getTable(message.id, search, parent);
+				var next = getOne(data[section], search);
+				if (next) {
+					var row = $('<tr></tr>');
+					row.append("<td colspan=2>"+next+"</td>");
+					table.append(row);
+				}
+			} else {
+				var id = message.id + "-" + search;
+				if ($('#'+id).length==0) {
+					table = getTable(message.id, parent);
+					var row = $('<tr></tr>');
+					row.append("<th>"+section+"</th><td id='"+id+"'>"+data[section]+"</td>");
+					table.append(row);
+				} else {
+					$('#'+id)[0].innerHTML=data[section];	
+				}
+			
+			}
+		}
 	}
-	secs.sort();
-	secs.forEach (function (section) {
-		if ($.type(stat[section]) == "object") {
-			var sect = $('<span id='+section+' style="float: left; border: 1px 1px 1px 1px;">');
-			sect.append("<h2>"+section+"</h2>");
-			var keys = [];
-			for (var key in stat[section]) {
-				keys.push(key);
-			}
-			//keys.sort();
-			var table = $('<table id=vmstat-table>'); 
-			keys.forEach (function (key) {
-				var row = "<tr>";
-				row += "<th>"+key+"</th>";
-				row += "<td id="+section+"_"+key+">"+stat[section][key]+"</td>";
-				row +- "</tr>";
-				table.append(row);
-			});
-			sect.append(table);
-		}
-		ret.append(sect);
-	});
-	return ret;
-}
 
-function updateMon(message) {
-	//console.log(message);
-	for (var section in message.data) {
-		if ($.type(message.data[section]) == "object") {
-			for (var key in message.data[section]) {
-				$("td[id="+section+"_"+key+"]")[0].innerHTML = message.data[section][key];
+	
+//			var table = getTable(message.id, section);
+//				for ( var key in data[section]) {
+//					var id = message.id + "_" + section + "_" + key;
+//					if ($(id).length) {
+//						$("td[id=" + id + "]")[0].innerHTML = data[section][key];
+//					}
+//				}
+//			}
+	
+	// get table for these stats, create if needed
+	function getTable (pub, section, parent) {
+		console.log("getTable:", pub, section, parent);
+		var id = pub+'-'+section;
+		var locate = pub;
+		if (parent) locate = pub + "-" + parent;
+		var table;
+		if ($('#'+id).length>0) {
+			table=$('#'+id+'-table');
+		} else {
+			var span = $('<span id="'+id+'" class="stat"><h2>'+section+'</h2></span>');
+			console.log("not found pub:", pub, "section:", section);
+			table = $('<table id="'+id+'-table"></table');
+			span.append(table);
+			if (!parent) {
+				$('#'+pub).append(span);
 			}
 		}
+		console.log(table);
+		return table;
 	}
 }

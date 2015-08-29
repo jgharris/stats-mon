@@ -24,7 +24,20 @@ module.exports = {
 					return res.serverError("cannot stop  " + col + ": " + message);
 				}
 			});
-		}
+		},
+		mon: function (req, res) {
+			var name = req.param('id');
+			Publisher.start(name, function (succeed, message) {
+				if (!succeed) return res.serverError("cannot start  " + name + ": " + message);
+				Publisher.findOne(name).exec(function(err, pub) {
+						if (err) {return res.serverError(err);}
+						Collector.findOne(pub.collector, function(err, col) {
+							var os = require('os');
+							return res.view('mon', {title: name, os: os, stat: col.stats});
+						});
+				});
+			});
+		},
 	
 };
 
