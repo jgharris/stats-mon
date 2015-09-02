@@ -10,7 +10,9 @@ function VmstatDCollector() {
 		handler : {
 			name: "singleStatRow",
 			startcol: 0,
-			keycol: 0
+			keycol: 0,
+   header: 2,
+   hunkHeader: 0
 		},
 		running : false,
 		started : "",
@@ -19,15 +21,15 @@ function VmstatDCollector() {
 		stats : {
 			disk : {
 				reads : {
-					total: 0,
-					merged: 0,
-					sectors: 0,
+					t: 0,
+					m: 0,
+					s: 0,
 					ms: 0
 				},
 				writes : {
-					total: 0,
-					merged: 0,
-					sectors: 0,
+					t: 0,
+					m: 0,
+					s: 0,
 					ms: 0
 				},
 				io : {

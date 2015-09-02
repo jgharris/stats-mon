@@ -37,8 +37,9 @@ module.exports.routes = {
 //  '/collector/stop' : 'CollectorController.stop',
   '/publisher/start' : 'PublisherController.start',
   '/publisher/stop' : 'PublisherController.stop',
-  '/publisher/mon': 'PublisherConstroller.mon',
-  '/os/mon': 'OsConstroller.mon'
+  '/publisher/mon': 'PublisherController.mon',
+  '/publisher/subs' : 'PublisherController.subs'
+//  '/os/mon': 'OsConstroller.mon'
 //  'get /mon' : 'StatsController.monitor'
 
 

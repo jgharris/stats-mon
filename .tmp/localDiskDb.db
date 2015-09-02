@@ -133,24 +133,26 @@
         "handler": {
           "name": "singleStatRow",
           "startcol": 0,
-          "keycol": 0
+          "keycol": 0,
+          "header": 2,
+          "hunkHeader": 0
         },
-        "running": true,
-        "started": "2015-08-29T16:01:06.631Z",
+        "running": false,
+        "started": "",
         "stopped": "",
         "linekey": 1,
         "stats": {
           "disk": {
             "reads": {
-              "total": 0,
-              "merged": 0,
-              "sectors": 0,
+              "t": 0,
+              "m": 0,
+              "s": 0,
               "ms": 0
             },
             "writes": {
-              "total": 0,
-              "merged": 0,
-              "sectors": 0,
+              "t": 0,
+              "m": 0,
+              "s": 0,
               "ms": 0
             },
             "io": {
@@ -159,21 +161,23 @@
             }
           }
         },
-        "createdAt": "2015-08-29T12:38:54.159Z",
-        "updatedAt": "2015-08-29T16:01:06.639Z"
+        "createdAt": "2015-09-02T12:20:39.752Z",
+        "updatedAt": "2015-09-02T12:20:39.752Z"
       },
       {
         "name": "vmstat",
         "exec": "vmstat",
-        "params": "1",
+        "params": "-n 1",
         "action": "spawn",
         "handler": {
           "name": "singleStatRow",
           "startcol": 1,
-          "keycol": -1
+          "keycol": -1,
+          "header": 2,
+          "hunkHeader": 0
         },
-        "running": true,
-        "started": "2015-08-29T15:07:56.626Z",
+        "running": false,
+        "started": "",
         "stopped": "",
         "stats": {
           "procs": {
@@ -206,8 +210,66 @@
             "st": 0
           }
         },
-        "createdAt": "2015-08-29T12:41:13.322Z",
-        "updatedAt": "2015-08-29T15:07:56.648Z"
+        "createdAt": "2015-09-02T12:21:01.474Z",
+        "updatedAt": "2015-09-02T12:21:01.474Z"
+      },
+      {
+        "name": "sar-u",
+        "exec": "sar",
+        "params": "-u -P ALL 1",
+        "action": "spawn",
+        "handler": {
+          "name": "singleStatRow",
+          "startcol": 1,
+          "keycol": 1,
+          "header": 1,
+          "hunkHeader": 2
+        },
+        "running": true,
+        "started": "2015-09-02T13:01:57.466Z",
+        "stopped": "",
+        "stats": {
+          "cpu": {
+            "us": 0,
+            "ni": 0,
+            "sy": 0,
+            "io": 0,
+            "st": 0,
+            "id": 0
+          }
+        },
+        "createdAt": "2015-09-02T12:33:03.124Z",
+        "updatedAt": "2015-09-02T13:01:57.477Z"
+      },
+      {
+        "name": "sar-d",
+        "exec": "sar",
+        "params": "-d 3",
+        "action": "spawn",
+        "handler": {
+          "name": "singleStatRow",
+          "startcol": 1,
+          "keycol": 1,
+          "header": 1,
+          "hunkHeader": 2
+        },
+        "running": true,
+        "started": "2015-09-02T12:57:08.995Z",
+        "stopped": "",
+        "stats": {
+          "disk": {
+            "tps": 0,
+            "rds": 0,
+            "wrs": 0,
+            "rqs": 0,
+            "qus": 0,
+            "await": 0,
+            "svc": 0,
+            "util": 0
+          }
+        },
+        "createdAt": "2015-09-02T12:56:55.770Z",
+        "updatedAt": "2015-09-02T12:57:09.026Z"
       }
     ],
     "colobj": [],
@@ -225,6 +287,20 @@
         "source": "devfed01-d",
         "createdAt": "2015-08-29T11:09:06.641Z",
         "updatedAt": "2015-08-29T11:09:06.641Z"
+      },
+      {
+        "name": "devfed01-sar-u",
+        "collector": "sar-u",
+        "source": "devfed01",
+        "createdAt": "2015-09-02T12:22:38.752Z",
+        "updatedAt": "2015-09-02T12:22:38.752Z"
+      },
+      {
+        "name": "devfed01-sar-d",
+        "collector": "sar-d",
+        "source": "devfed01",
+        "createdAt": "2015-09-02T12:46:42.740Z",
+        "updatedAt": "2015-09-02T12:46:42.740Z"
       }
     ]
   },

@@ -5,12 +5,14 @@ function VmstatCollector() {
 	this.object = {
 		name : "vmstat",
 		exec : "vmstat",
-		params : "1",
+		params : "-n 1",
 		action : "spawn",
 		handler : {
 			name: "singleStatRow",
 			startcol: 1,
-			keycol: -1
+			keycol: -1,
+   header: 2,
+   hunkHeader: 0
 		},
 		running : false,
 		started : "",

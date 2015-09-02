@@ -51,8 +51,9 @@ ColObj.prototype.start = function (cb) {
 		
 		// process command output
 		obj = this;
+		var line = 1;
 		this.proc.stdout.on('data', function(data) {
-			var newData = han.processHunk(data);
+			var newData = han.processHunk(data, line);
 			obj.updateStats(obj.publisher, newData);
 		});
 		

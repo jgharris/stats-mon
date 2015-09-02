@@ -1,88 +1,91 @@
 // set global title in template
-//io.socket.on('connect', function () {
-//	io.socket.get('/publisher/'+title, {}, function () {
-//		io.socket.on("publisher", updateMon);
-//	});
-//});
+io.socket.on('connect', function () {
+	Widgets= [];
+	io.socket.on("publisher", updateWidget);
+	if (title) subscribe(title);
+});
 
-var sub = new Subscriber(title);
-
-function Subscriber(name) {
-	var obj = this;
-	io.socket.on('connect', function() {
-		io.socket.get('/publisher/' + name, {}, function() {
-			io.socket.on("publisher", obj.update);
+var subscribe = function(name) {
+	io.socket.get( '/publisher/subs/'+name, {}, function () {});
+}
+	var updateWidget = function(message) {
+		if (!Widgets[message.id]) {
+			Widgets[message.id] = new Widget(message.id, name, "top-widget");
+			Widgets[message.id].setType("h");
+			$('#' + message.id).empty().append(Widgets[message.id].span);
+		}
+		var w = Widgets[message.id];
+		message.data.forEach(function(row) {
+			w.add(row);
 		});
-	});
+	}
+
+
+
+function Widget (name, short, c) {
+	if (!c) var c = "stat";
+	if (!short) var short = name;
+	this.type = "v";
+	this.name = name;
+	this.span = $("<span id='"+name+"-span' class='"+c+"'>");
+	this.title = $("<h2>"+short+"</h2>");
+	this.table = $("<table id="+name+">");
+	this.span.append(this.title).append(this.table);
+	this.children = {};
 }
 
-Subscriber.prototype.update = function(message) {
-	message.data.forEach(
-		function(data) {
-			console.log(data);
-			if (data) getOne(data);
-		}
-	);
+Widget.prototype.setType = function(n) {
+	this.type = n;
+}
 
-	function getOne (data, parent) {
-		console.log("getOne:", parent);
-		for (var section in data) {
-			if (section.match(/__/)) continue;
-			var table;
-			var search = section;
-			if (parent) search=parent+"-"+section;
-			if ($.type(data[section]) == "object") {
-				table = getTable(message.id, search, parent);
-				var next = getOne(data[section], search);
-				if (next) {
-					var row = $('<tr></tr>');
-					row.append("<td colspan=2>"+next+"</td>");
-					table.append(row);
-				}
+Widget.prototype.add = function(data) {
+	for (var section in data) {
+		var name = this.name + "-" + section;
+		if ($.type(data[section]) == "object") {
+			if (!this.children[name]) {
+				var widget = new Widget(name, section);
+				widget.add(data[section]);
+				this.appendChild(widget);
 			} else {
-				var id = message.id + "-" + search;
-				if ($('#'+id).length==0) {
-					table = getTable(message.id, parent);
-					var row = $('<tr></tr>');
-					row.append("<th>"+section+"</th><td id='"+id+"'>"+data[section]+"</td>");
-					table.append(row);
-				} else {
-					$('#'+id)[0].innerHTML=data[section];	
-				}
-			
+				this.children[name].add(data[section]);
 			}
-		}
-	}
-
-	
-//			var table = getTable(message.id, section);
-//				for ( var key in data[section]) {
-//					var id = message.id + "_" + section + "_" + key;
-//					if ($(id).length) {
-//						$("td[id=" + id + "]")[0].innerHTML = data[section][key];
-//					}
-//				}
-//			}
-	
-	// get table for these stats, create if needed
-	function getTable (pub, section, parent) {
-		console.log("getTable:", pub, section, parent);
-		var id = pub+'-'+section;
-		var locate = pub;
-		if (parent) locate = pub + "-" + parent;
-		var table;
-		if ($('#'+id).length>0) {
-			table=$('#'+id+'-table');
 		} else {
-			var span = $('<span id="'+id+'" class="stat"><h2>'+section+'</h2></span>');
-			console.log("not found pub:", pub, "section:", section);
-			table = $('<table id="'+id+'-table"></table');
-			span.append(table);
-			if (!parent) {
-				$('#'+pub).append(span);
-			}
+			this.appendRow(section, data[section]);
 		}
-		console.log(table);
-		return table;
 	}
 }
+
+Widget.prototype.appendChild = function(widget) {
+	if (this.type == "h") {
+		this.appendChildH(widget);
+	} else {
+		this.appendChildV(widget);
+	}
+}
+
+Widget.prototype.appendChildH = function(widget) {
+//	console.log("appendChild", widget);
+	this.children[widget.name] = widget;
+	this.span.append(widget.span);
+}
+
+Widget.prototype.appendChildV = function(widget) {
+//	console.log("appendChild", widget);
+	this.children[widget.name] = widget;
+	var row = $('<tr></tr>');
+	var col = ($('<td colspan=2></td>'));
+	col.append(widget.span);
+	row.append(col);
+	this.table.append(row);
+}
+
+Widget.prototype.appendRow = function(key, value) {
+//	console.log("appendRow", key, value);
+	var id = this.name + "-" + key;
+	if ($('#'+id).length==0) {
+		this.table.append("<tr><th>"+key+"</td><td id="+id+">"+value+"</td></tr>");
+	} else {
+		$('#'+id)[0].innerHTML = value;
+	}
+}
+

@@ -34,5 +34,20 @@ module.exports = {
 			}
 		});
 	},
-
+	
+	subs : function(name, req, cb) {
+		if (!name) return (true, "nothing to do");
+		Publisher.find(name).exec(function (err, pubs) {
+			if (err) { 
+				cb (false, "cannot find "+name);
+			} else {
+				var pub = pubs[0];
+				Publisher.subscribe(req.socket, pubs);
+				Collector.start(pub.collector, name, function (status, message) {
+					return (status, message);
+				});
+			}
+		});
+	}
+	
 };
