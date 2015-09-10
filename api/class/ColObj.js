@@ -30,48 +30,24 @@ ColObj.prototype.start = function (cb) {
 			}
 		}
 		
-		// update status
-		this.objUpdate({ running: true, started: new Date().toISOString()});
-		this.running = true;
-
-		// standard event handlings 
-		var obj = this;
-		this.proc.on('close', function (code) {
-			obj.running = false;
-			obj.objUpdate({ running: false, stopped: new Date().toISOString()});
-			if (code) console.log('vmstat: child process exited with code ' + code);
-		});
-		
-		// get the right handler for this command
-		var han=this.getHandler(this.collector);
-		if (!han) {
-			cb(false, this.collector.name + ": no handler");
-			return;
+		if (this.collector.action == "repeat") {
+			if (!this.repeat(this.collector.rate)) {
+				cb(false, "wont go");
+				return;
+			}
 		}
-		
-		// process command output
-		obj = this;
-		var line = 1;
-		this.proc.stdout.on('data', function(data) {
-			var newData = han.processHunk(data, line);
-			obj.updateStats(obj.publisher, newData);
-		});
+
 		
 		// all set
-		cb(true, "got going");
+		cb(true, "started");
 	} else {
-		cb(true, "still going");
+		cb(true, "already running");
 	}
 }
 
 // publish data as an update of the Publisher
 ColObj.prototype.updateStats = function (name, newData) {
 	Publisher.publishUpdate(name, newData);
-//	Publisher.findOne(name).exec(function (err, pub) {
-//		if (!err) {
-//			Publisher.publishUpdate(pub.name, newData);
-//		}
-//	});
 }
 
 // get a handler object to process this output
@@ -106,6 +82,51 @@ ColObj.prototype.stop = function (cb) {
 ColObj.prototype.spawn = function () {
 	var spawn = require('child_process').spawn;
 	this.proc = spawn(this.collector.exec, this.collector.params.split(/ /));
-	return this.proc;
+	if (!this.proc) return false ;
+
+	// update status
+	this.objUpdate({ running: true, started: new Date().toISOString()});
+	this.running = true;
+
+	// stop when process dies 
+	var obj = this;
+	this.proc.on('close', function (code) {
+		obj.running = false;
+		obj.objUpdate({ running: false, stopped: new Date().toISOString()});
+		if (code) console.log(this.collector.exec + ': process exit code ' + code);
+	});
+	
+	// get the right handler for this command
+	var han=this.getHandler(this.collector);
+	if (!han) return false;
+	
+	// process command output
+	obj = this;
+	var line = 1;
+	this.proc.stdout.on('data', function(data) {
+		var newData = han.processHunk(data, line);
+		obj.updateStats(obj.publisher, newData);
+	});
+	
+	return true;
 }
 
+ColObj.prototype.repeat = function (rate) {
+	var spawn = require('child_process');
+	var obj = this;
+	var proc = spawn.exec(this.collector.exec, 
+		function (error, stdout, stdin) {
+			var newData = [];
+			var ref = { refresh: stdout };
+			newData.push(ref);
+			obj.updateStats(obj.publisher, newData);
+			setTimeout(function () { obj.repeat() }, rate);
+	});
+	if (!proc) return false ;
+
+	// update status
+//	this.objUpdate({ running: true, started: new Date().toISOString()});
+//	this.running = true;
+
+	return true;
+}

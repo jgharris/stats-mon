@@ -23,6 +23,11 @@ h1 {
 	vertical-align: middle;
 }
 
+#devfed01-top-refresh {
+	white-space: pre;
+}
+
+
 .stat {
 	float: left;
 	min-width: 150px;
@@ -46,5 +51,5 @@ h1 {
 	text-align: right;
 }
 .stat table tr th {
-	text-align: right;
+	text-align: left;
 }

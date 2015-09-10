@@ -9,6 +9,7 @@ var subscribe = function(name) {
 	io.socket.get( '/publisher/subs/'+name, {}, function () {});
 }
 	var updateWidget = function(message) {
+//		console.log(message);
 		if (!Widgets[message.id]) {
 			Widgets[message.id] = new Widget(message.id, name, "top-widget");
 			Widgets[message.id].setType("h");
@@ -79,13 +80,29 @@ Widget.prototype.appendChildV = function(widget) {
 	this.table.append(row);
 }
 
+// use key of "code" to syntax highlight text
 Widget.prototype.appendRow = function(key, value) {
 //	console.log("appendRow", key, value);
 	var id = this.name + "-" + key;
 	if ($('#'+id).length==0) {
-		this.table.append("<tr><th>"+key+"</td><td id="+id+">"+value+"</td></tr>");
+		if (key == "code") {
+			this.table.append("<tr><td colspan=2 id="+id+"><pre><code class='language-clike'>"+value+"</code></pre></td></tr>");
+		} else {
+			this.table.append("<tr><th>"+key+"</td><td id="+id+">"+value+"</td></tr>");
+		}
 	} else {
-		$('#'+id)[0].innerHTML = value;
+		var html = "";
+		if (key == "code") {
+			html = "<pre><code  class='language-clike'>"+value+"</code></pre>";
+		} else {
+			html = value; 
+		}
+		$('#'+id)[0].innerHTML = html;
+	}
+	if (key == "code") {
+		$('pre code').each(function(i, block) {
+			Prism.highlightElement(block);
+		});
 	}
 }
 

@@ -7,28 +7,27 @@
 
 module.exports = {
 		start: function (req, res) {
-			var col = req.param('id');
-			Publisher.start(col, function (succeed, message) {
+			var name = req.param('id');
+			Publisher.start(name, function (succeed, message) {
 				if (succeed) {
 					return res.ok(message);
 				} else {
-					return res.serverError("cannot start " + col + ": " + message);
+					return res.serverError("cannot start " + name + ": " + message);
 				}
 			});
 		},
 		stop: function (req, res) {
-			Publisher.stop(req.param('id'), function (succeed, message) {
+			var name = req.param('id');
+			Publisher.stop(name, function (succeed, message) {
 				if (succeed) {
 					return res.ok(message);
 				} else {
-					return res.serverError("cannot stop  " + col + ": " + message);
+					return res.serverError("cannot stop  " + name + ": " + message);
 				}
 			});
 		},
 		mon: function (req, res) {
 			var name = req.param('id');
-//			Publisher.start(name, function (succeed, message) {
-//				if (!succeed) return res.serverError("cannot start  " + name + ": " + message);
 				Publisher.findOne(name).exec(function(err, pub) {
 						if (err) {return res.serverError(err);}
 						Collector.findOne(pub.collector, function(err, col) {
@@ -36,10 +35,10 @@ module.exports = {
 							return res.view('mon', {title: name, os: os, stat: col.stats});
 						});
 				});
-//			});
 		},
 		subs: function (req, res) {
-			Publisher.subs(req.param('id'), req, function (succeed, message) {
+			var name = req.param('id');
+			Publisher.subs(name, req, function (succeed, message) {
 				if (succeed) {
 					return res.ok(message);
 				} else {
