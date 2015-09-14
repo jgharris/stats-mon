@@ -177,7 +177,7 @@
           "hunkHeader": 0
         },
         "running": true,
-        "started": "2015-09-09T17:49:33.859Z",
+        "started": "2015-09-14T04:06:11.487Z",
         "stopped": "",
         "stats": {
           "procs": {
@@ -211,7 +211,7 @@
           }
         },
         "createdAt": "2015-09-02T12:21:01.474Z",
-        "updatedAt": "2015-09-09T17:49:33.888Z"
+        "updatedAt": "2015-09-14T04:06:11.498Z"
       },
       {
         "name": "sar-u",
@@ -226,7 +226,7 @@
           "hunkHeader": 2
         },
         "running": true,
-        "started": "2015-09-09T04:11:56.360Z",
+        "started": "2015-09-10T16:27:58.454Z",
         "stopped": "",
         "stats": {
           "cpu": {
@@ -239,7 +239,7 @@
           }
         },
         "createdAt": "2015-09-02T12:33:03.124Z",
-        "updatedAt": "2015-09-09T04:11:56.368Z"
+        "updatedAt": "2015-09-10T16:27:58.460Z"
       },
       {
         "name": "sar-d",
@@ -254,7 +254,7 @@
           "hunkHeader": 2
         },
         "running": true,
-        "started": "2015-09-09T17:56:39.819Z",
+        "started": "2015-09-10T16:28:27.054Z",
         "stopped": "",
         "stats": {
           "disk": {
@@ -269,7 +269,7 @@
           }
         },
         "createdAt": "2015-09-02T12:56:55.770Z",
-        "updatedAt": "2015-09-09T17:56:39.822Z"
+        "updatedAt": "2015-09-10T16:28:27.063Z"
       },
       {
         "name": "top",
@@ -280,13 +280,13 @@
           "name": "refresh"
         },
         "running": true,
-        "started": "2015-09-09T17:48:17.991Z",
+        "started": "2015-09-14T07:37:47.823Z",
         "stopped": "",
         "stats": {
           "refresh": ""
         },
         "createdAt": "2015-09-09T04:06:11.541Z",
-        "updatedAt": "2015-09-09T17:48:18.008Z"
+        "updatedAt": "2015-09-14T07:37:47.844Z"
       }
     ],
     "colobj": [],
@@ -333,7 +333,8 @@
         "createdAt": "2015-09-08T06:46:24.428Z",
         "updatedAt": "2015-09-08T06:46:24.428Z"
       }
-    ]
+    ],
+    "remotecollector": []
   },
   "schema": {
     "stats": {
@@ -416,6 +417,20 @@
       "updatedAt": {
         "type": "datetime"
       }
+    },
+    "remotecollector": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
     }
   },
   "counters": {
@@ -434,6 +449,7 @@
     "colobj": {},
     "publisher": {
       "id": 1
-    }
+    },
+    "remotecollector": {}
   }
 }

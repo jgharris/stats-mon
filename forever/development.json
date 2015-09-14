@@ -1,0 +1,9 @@
+{
+    "uid": "node-console",
+    "user": "jgh",
+    "append": false,
+    "watch": false,
+    "script": "app.js",
+    "sourceDir": "/home/jgh/apps/mon",
+    "workingDir": "/home/jgh/apps/mon"
+}

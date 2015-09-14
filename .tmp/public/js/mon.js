@@ -1,12 +1,18 @@
 // set global title in template
 io.socket.on('connect', function () {
 	Widgets= [];
-	io.socket.on("publisher", updateWidget);
-	if (title) subscribe(title);
+	io.socket.on("message", updateWidget);
+	if (typeof host != 'undefined') {
+		subscribe(title, { host: host });
+	} else {
+		subscribe(title);
+	}
 });
 
-var subscribe = function(name) {
-	io.socket.get( '/publisher/subs/'+name, {}, function () {});
+var subscribe = function(name, params) {
+	io.socket.get( '/publisher/subs/'+name, params, function (data) {
+		console.log("subs", data);
+	});
 }
 	var updateWidget = function(message) {
 //		console.log(message);
@@ -20,8 +26,6 @@ var subscribe = function(name) {
 			w.add(row);
 		});
 	}
-
-
 
 function Widget (name, short, c) {
 	if (!c) var c = "stat";

@@ -1,7 +1,12 @@
 <% include header %>
 
 <script>
-var title = '<%= title %>';
+var title = "<%= title %>";
+<% var id = title; %>
+<% if (typeof host != 'undefined') { %>
+ var host = "<%= host %>";
+ <% id = host + "-" + title; %>
+<% } %>
 </script>
 
-<div id="<%= title %>" name="subscriber"></div>
+<div id="<%= id %>" name="subscriber"></div>

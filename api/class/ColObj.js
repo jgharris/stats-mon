@@ -8,16 +8,14 @@
 
 module.exports = ColObj; 
 
-function ColObj(col, name) {
+function ColObj(col) {
 	this.orig_collector = col;
 	this.collector = col;
-	this.publisher = name;
 	this.objUpdate({ running: false, stopped: ''});
 }
 
 ColObj.prototype.running = false;
 ColObj.prototype.collector = false;
-ColObj.prototype.publisher = false;
 
 ColObj.prototype.start = function (cb) {
 	if (!this.running) {
@@ -46,8 +44,9 @@ ColObj.prototype.start = function (cb) {
 }
 
 // publish data as an update of the Publisher
-ColObj.prototype.updateStats = function (name, newData) {
-	Publisher.publishUpdate(name, newData);
+ColObj.prototype.updateStats = function (newData) {
+	var message = { id: this.collector.name, data: newData };
+	sails.sockets.broadcast(this.collector.name, message);
 }
 
 // get a handler object to process this output
@@ -65,7 +64,7 @@ ColObj.prototype.objUpdate = function (data) {
 	}
 	var colname=this.collector.name;
 	this.collector.save(function (error) {
-		if (!error) Collector.publishUpdate(colname, data);
+//		if (!error) Collector.publishUpdate(colname, data);
 	});
 }
 
@@ -105,7 +104,7 @@ ColObj.prototype.spawn = function () {
 	var line = 1;
 	this.proc.stdout.on('data', function(data) {
 		var newData = han.processHunk(data, line);
-		obj.updateStats(obj.publisher, newData);
+		obj.updateStats(newData);
 	});
 	
 	return true;

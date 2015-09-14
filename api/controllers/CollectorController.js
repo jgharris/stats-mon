@@ -25,5 +25,9 @@ module.exports = {
 //				}
 //			});
 //		}
+		status: function (req, res) {
+			var os = require('os');
+			return res.view('status', { collectors: Collector.getList(), rc: Collector.getRemoteList(), os: os });
+		},
 };
 

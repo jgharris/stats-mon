@@ -35,6 +35,7 @@ module.exports.routes = {
   '/': { view: 'homepage' },
 //  '/collector/start' : 'CollectorController.start',
 //  '/collector/stop' : 'CollectorController.stop',
+  '/collector/status': 'CollectorController.status',
   '/publisher/start' : 'PublisherController.start',
   '/publisher/stop' : 'PublisherController.stop',
   '/publisher/mon': 'PublisherController.mon',

@@ -28,17 +28,15 @@ module.exports = {
 		},
 		mon: function (req, res) {
 			var name = req.param('id');
-				Publisher.findOne(name).exec(function(err, pub) {
-						if (err) {return res.serverError(err);}
-						Collector.findOne(pub.collector, function(err, col) {
-							var os = require('os');
-							return res.view('mon', {title: name, os: os, stat: col.stats});
-						});
-				});
+			var host = req.param('host');
+			var os = require('os');
+			return res.view('mon', {title: name, host: host, os: os });
 		},
 		subs: function (req, res) {
 			var name = req.param('id');
-			Publisher.subs(name, req, function (succeed, message) {
+			var host = req.param('host');
+			Publisher.subs(name, host, req, function (succeed, message) {
+				console.log("subs:", succeed, message)
 				if (succeed) {
 					return res.ok(message);
 				} else {

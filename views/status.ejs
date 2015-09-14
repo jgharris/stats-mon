@@ -1,0 +1,49 @@
+<% include header %>
+<h1>node-console status</h2>
+<h2>collectors</h2>
+<table>
+<% var cols = [ "running", "proc.pid", "exec", "params", "started" ]; %>
+<tr><th>name</th>
+<% cols.forEach (function (param) { %>
+<th><%= param %></th>
+<% }); %>
+</tr>
+<% for (var col in collectors) { %>
+ <tr><td><%= col %></td>
+ <% cols.forEach (function (param) { %>
+ <% if (param.match(/\./)) { %>
+ <% var sub = param.replace(/\..*/, ""); %>
+ <% param = param.replace(/^proc\./, ""); %>
+ <td><%= collectors[col][sub][param] %></td>
+ <% } else { %>
+ <td><%= collectors[col].collector[param] %></td>
+ <% } %>
+ <% }); %>
+ </tr>
+<% } %>
+</table>
+
+<h2>remote collectors</h2>
+<table>
+<% var cols = [ "running", "remote.host", "remote.url", "remote.connected" ]; %>
+<tr><th>name</th>
+<% cols.forEach (function (param) { %>
+<th><%= param %></th>
+<% }); %>
+</tr>
+<% for (var col in rc) { %>
+ <tr>
+ <td><%= col %></td>
+ <% console.log(rc[col].remote.socket); %>
+ <% cols.forEach (function (param) { %>
+  <% if (param.match(/\./)) { %>
+   <% var sub = param.replace(/\..*/, ""); %>
+   <% param = param.replace(/^[a-z0-9]*\./, ""); %>
+   <td><%= rc[col][sub][param] %></td>
+  <% } else { %>
+   <td><%= rc[col][param] %></td>
+  <% } %>
+ <% }); %>
+ </tr>
+<% } %>
+</table>
