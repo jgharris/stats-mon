@@ -1,0 +1,18 @@
+
+#sar-u {
+/*	width: 1000px; */
+}
+
+#sar-u div {
+	width: 200px;
+	height: 100px
+}
+
+#sar-u span {
+	float: left;
+}
+
+.charttitle {
+	width: 100%;
+	text-align: center;
+}

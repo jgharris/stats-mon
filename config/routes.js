@@ -39,7 +39,9 @@ module.exports.routes = {
   '/publisher/start' : 'PublisherController.start',
   '/publisher/stop' : 'PublisherController.stop',
   '/publisher/mon': 'PublisherController.mon',
-  '/publisher/subs' : 'PublisherController.subs'
+  '/publisher/subs' : 'PublisherController.subs',
+  '/dashboard' : 'DashboardController.dashboard'
+	 
 //  '/os/mon': 'OsConstroller.mon'
 //  'get /mon' : 'StatsController.monitor'
 

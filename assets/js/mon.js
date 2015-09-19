@@ -1,11 +1,13 @@
 // set global title in template
 io.socket.on('connect', function () {
+	if (typeof title != "undefined") {
 	Widgets= [];
 	io.socket.on("message", updateWidget);
 	if (typeof host != 'undefined') {
 		subscribe(title, { host: host });
 	} else {
 		subscribe(title);
+	}
 	}
 });
 
