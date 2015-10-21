@@ -226,7 +226,7 @@
           "hunkHeader": 2
         },
         "running": true,
-        "started": "2015-09-16T00:10:35.806Z",
+        "started": "2015-09-19T00:55:06.373Z",
         "stopped": "",
         "stats": {
           "cpu": {
@@ -239,7 +239,7 @@
           }
         },
         "createdAt": "2015-09-02T12:33:03.124Z",
-        "updatedAt": "2015-09-16T00:10:35.817Z"
+        "updatedAt": "2015-09-19T00:55:06.409Z"
       },
       {
         "name": "sar-d",
